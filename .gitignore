@@ -10,16 +10,3 @@ node_modules/
 # Build files
 dist/
 build/
-
-# Logs
-*.log
-npm-debug.log*
-
-# Python
-__pycache__/
-*.pyc
-venv/
-.venv/
-
-# Editor
-.vscode/

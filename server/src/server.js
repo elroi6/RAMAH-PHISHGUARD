@@ -1,39 +1,35 @@
-import express from "express";
-import cors from "cors";
-import helmet from "helmet";
 import dotenv from "dotenv";
-import connectDB from "./config/database.js";
-
 dotenv.config();
 
-const app = express();
+import app from "./app.js";
+import connectDB from "./config/database.js";
+
 const PORT = process.env.PORT || 5000;
 
-app.use(helmet());
-
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
-  })
-);
-
-app.use(express.json({ limit: "10kb" }));
-
-app.get("/api/v1/health", (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "RAMAH-PHISHGUARD API is running",
-    database: "MongoDB integration configured",
-    timestamp: new Date().toISOString(),
-  });
-});
-
 const startServer = async () => {
-  await connectDB();
+  try {
+    await connectDB();
 
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
+    const server = app.listen(PORT, () => {
+      console.log(`RAMAH-PHISHGUARD running on port ${PORT}`);
+      console.log(`Health check: http://localhost:${PORT}/api/v1/health`);
+    });
+
+    const shutdown = () => {
+      console.log("Shutting down server...");
+
+      server.close(() => {
+        console.log("HTTP server closed");
+        process.exit(0);
+      });
+    };
+
+    process.on("SIGINT", shutdown);
+    process.on("SIGTERM", shutdown);
+  } catch (error) {
+    console.error("Server startup failed:", error.message);
+    process.exit(1);
+  }
 };
 
 startServer();

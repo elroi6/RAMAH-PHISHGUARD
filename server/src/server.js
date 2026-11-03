@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
+import connectDB from "./config/database.js";
 
 dotenv.config();
 
@@ -10,9 +11,11 @@ const PORT = process.env.PORT || 5000;
 
 app.use(helmet());
 
-app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:5173"
-}));
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+  })
+);
 
 app.use(express.json({ limit: "10kb" }));
 
@@ -20,10 +23,17 @@ app.get("/api/v1/health", (req, res) => {
   res.status(200).json({
     success: true,
     message: "RAMAH-PHISHGUARD API is running",
-    timestamp: new Date().toISOString()
+    database: "MongoDB integration configured",
+    timestamp: new Date().toISOString(),
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`RAMAH-PHISHGUARD API running on port ${PORT}`);
-});
+const startServer = async () => {
+  await connectDB();
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+};
+
+startServer();

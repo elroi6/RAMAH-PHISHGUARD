@@ -1,122 +1,252 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import {
+  ShieldCheck,
+  LockKeyhole,
+  Activity,
+  Globe,
+  ArrowRight,
+  ShieldAlert,
+  ScanSearch,
+} from "lucide-react";
+
+import { checkBackendHealth } from "./services/api";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [backendStatus, setBackendStatus] = useState("checking");
+  const [backendMessage, setBackendMessage] = useState("");
+
+  useEffect(() => {
+    const checkConnection = async () => {
+      try {
+        const data = await checkBackendHealth();
+
+        setBackendStatus("connected");
+        setBackendMessage(data.message);
+      } catch (error) {
+        setBackendStatus("disconnected");
+        setBackendMessage(
+          error.response?.data?.message ||
+          "Unable to connect to the backend"
+        );
+      }
+    };
+
+    checkConnection();
+  }, []);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
+    <div className="app">
+      <header className="navbar">
+        <a href="/" className="brand">
+          <div className="brand-icon">
+            <ShieldCheck size={27} />
+          </div>
+
+          <div>
+            <h1>RAMAH<span>-PHISHGUARD</span></h1>
+            <p>BY RAMAH TECHNOLOGIES</p>
+          </div>
+        </a>
+
+        <nav className="nav-links">
+          <a href="#features">Features</a>
+          <a href="#about">About</a>
+          <a href="#status">System Status</a>
+        </nav>
+
+        <a href="#features" className="nav-button">
+  Get Started <ArrowRight size={16} />
+</a>
+      
+      </header>
+
+      <main>
+        <section className="hero">
+          <div className="hero-content">
+            <div className="eyebrow">
+              <span className="status-dot" />
+              CYBERSECURITY PROTECTION PLATFORM
+            </div>
+
+            <h2>
+              Detect Threats.
+              <br />
+              <span>Protect People.</span>
+            </h2>
+
+            <p className="hero-description">
+              Take control of your digital safety. RAMAH-PHISHGUARD
+              is being built to help identify suspicious URLs,
+              understand phishing threats, and promote safer
+              browsing across Ethiopia.
+            </p>
+
+            <div className="hero-actions">
+              <a href="#features" className="primary-button">
+                Explore Platform <ArrowRight size={18} />
+              </a>
+
+              <a href="#about" className="secondary-button">
+                Learn More
+              </a>
+            </div>
+
+            <div className="trust-note">
+              <LockKeyhole size={15} />
+              Built with security and privacy in mind
+            </div>
+          </div>
+
+          <div className="hero-visual">
+            <div className="shield-card">
+              <div className="shield-glow">
+                <ShieldCheck size={100} strokeWidth={1.2} />
+              </div>
+
+              <div className="visual-label">
+                <span className="status-dot" />
+                SECURITY FIRST
+              </div>
+
+              <div className="visual-bottom">
+                <span>RAMAH-PHISHGUARD</span>
+                <span>01 / 2026</span>
+              </div>
+            </div>
+
+            <div className="floating-card floating-top">
+              <ShieldAlert size={19} />
+              <span>Threat awareness</span>
+            </div>
+
+            <div className="floating-card floating-bottom">
+              <Activity size={19} />
+              <span>Intelligent analysis</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="features" id="features">
+          <div className="section-heading">
+            <span>WHAT WE ARE BUILDING</span>
+            <h2>Security that starts with awareness.</h2>
+            <p>
+              Tools and knowledge to help people make safer
+              decisions online.
+            </p>
+          </div>
+
+          <div className="feature-grid">
+            <article className="feature-card">
+              <div className="feature-icon">
+                <ScanSearch size={25} />
+              </div>
+              <h3>URL Threat Detection</h3>
+              <p>
+                Analyze suspicious URLs and identify potentially
+                dangerous indicators.
+              </p>
+              <span className="feature-label">IN DEVELOPMENT</span>
+            </article>
+
+            <article className="feature-card">
+              <div className="feature-icon">
+                <ShieldAlert size={25} />
+              </div>
+              <h3>Threat Intelligence</h3>
+              <p>
+                Identify potential impersonation and suspicious
+                online activity.
+              </p>
+              <span className="feature-label">IN DEVELOPMENT</span>
+            </article>
+
+            <article className="feature-card">
+              <div className="feature-icon">
+                <Globe size={25} />
+              </div>
+              <h3>Cyber Awareness</h3>
+              <p>
+                Learn to recognize phishing, scams, and common
+                online security risks.
+              </p>
+              <span className="feature-label">IN DEVELOPMENT</span>
+            </article>
+          </div>
+        </section>
+
+        <section className="system-status" id="status">
+          <div>
+            <span className="section-eyebrow">DEVELOPMENT ENVIRONMENT</span>
+            <h2>System connectivity</h2>
+            <p>Live connection to the RAMAH-PHISHGUARD backend.</p>
+          </div>
+
+          <div className="connection-card">
+            <div className="connection-indicator">
+              <span
+                className={`status-dot ${
+                  backendStatus === "connected"
+                    ? "online"
+                    : backendStatus === "disconnected"
+                    ? "offline"
+                    : "checking"
+                }`}
+              />
+
+              <div>
+                <strong>
+                  {backendStatus === "connected"
+                    ? "Backend Connected"
+                    : backendStatus === "disconnected"
+                    ? "Backend Disconnected"
+                    : "Checking Connection"}
+                </strong>
+
+                <p>
+                  {backendMessage ||
+                    "Checking Express API availability..."}
+                </p>
+              </div>
+            </div>
+
+            <button
+              className="refresh-button"
+              onClick={() => window.location.reload()}
+            >
+              Refresh
+            </button>
+          </div>
+        </section>
+
+        <section className="about-section" id="about">
+          <div className="about-icon">
+            <ShieldCheck size={35} />
+          </div>
+
+          <h2>Think Before You Click.</h2>
+
           <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+            A cybersecurity initiative by RAMAH TECHNOLOGIES,
+            developed to promote safer digital experiences
+            and improve phishing awareness in Ethiopia.
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+          <span>BUILD SMART. STAY SECURE.</span>
+        </section>
+      </main>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+      <footer>
+        <div className="footer-brand">
+          RAMAH-PHISHGUARD
+          <span> BY RAMAH TECHNOLOGIES</span>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        <p>© {new Date().getFullYear()} RAMAH TECHNOLOGIES. All rights reserved.</p>
+      </footer>
+    </div>
+  );
 }
 
-export default App
+export default App;

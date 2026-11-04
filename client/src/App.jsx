@@ -1,4 +1,12 @@
+
 import { useEffect, useState } from "react";
+import {
+  Routes,
+  Route,
+  Link,
+  Navigate,
+} from "react-router-dom";
+
 import {
   ShieldCheck,
   LockKeyhole,
@@ -10,9 +18,14 @@ import {
 } from "lucide-react";
 
 import { checkBackendHealth } from "./services/api";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+
 import "./App.css";
 
-function App() {
+function LandingPage() {
   const [backendStatus, setBackendStatus] = useState("checking");
   const [backendMessage, setBackendMessage] = useState("");
 
@@ -38,7 +51,7 @@ function App() {
   return (
     <div className="app">
       <header className="navbar">
-        <a href="/" className="brand">
+        <Link to="/" className="brand">
           <div className="brand-icon">
             <ShieldCheck size={27} />
           </div>
@@ -47,7 +60,7 @@ function App() {
             <h1>RAMAH<span>-PHISHGUARD</span></h1>
             <p>BY RAMAH TECHNOLOGIES</p>
           </div>
-        </a>
+        </Link>
 
         <nav className="nav-links">
           <a href="#features">Features</a>
@@ -55,10 +68,9 @@ function App() {
           <a href="#status">System Status</a>
         </nav>
 
-        <a href="#features" className="nav-button">
-  Get Started <ArrowRight size={16} />
-</a>
-      
+        <Link to="/register" className="nav-button">
+          Get Started <ArrowRight size={16} />
+        </Link>
       </header>
 
       <main>
@@ -83,9 +95,9 @@ function App() {
             </p>
 
             <div className="hero-actions">
-              <a href="#features" className="primary-button">
-                Explore Platform <ArrowRight size={18} />
-              </a>
+              <Link to="/register" className="primary-button">
+                Get Started <ArrowRight size={18} />
+              </Link>
 
               <a href="#about" className="secondary-button">
                 Learn More
@@ -243,9 +255,29 @@ function App() {
           <span> BY RAMAH TECHNOLOGIES</span>
         </div>
 
-        <p>© {new Date().getFullYear()} RAMAH TECHNOLOGIES. All rights reserved.</p>
+        <p>
+          © {new Date().getFullYear()} RAMAH TECHNOLOGIES.
+          All rights reserved.
+        </p>
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 

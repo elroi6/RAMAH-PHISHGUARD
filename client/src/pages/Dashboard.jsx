@@ -153,7 +153,7 @@ function Dashboard() {
   return (
     <div className="dashboard-page">
       <aside className="dashboard-sidebar">
-        <Link to="/" className="dashboard-brand">
+        <Link to="/dashboard" className="dashboard-brand">
           <img
   src={ramahLogo}
   alt="RAMAH TECHNOLOGIES"

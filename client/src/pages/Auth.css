@@ -402,7 +402,6 @@
     line-height: 1.7;
   }
 }
-
 @media (max-width: 360px) {
   .auth-home-link {
     font-size: 12px;
@@ -415,4 +414,18 @@
   .auth-card {
     padding: 24px 17px;
   }
+}
+
+/* =========================================
+   FIX BROWSER AUTOFILL YELLOW BACKGROUND
+========================================= */
+
+.auth-input-wrapper input:-webkit-autofill,
+.auth-input-wrapper input:-webkit-autofill:hover,
+.auth-input-wrapper input:-webkit-autofill:focus,
+.auth-input-wrapper input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #050b18 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff;
+  transition: background-color 5000s ease-in-out 0s;
 }

@@ -1,6 +1,7 @@
-
+import ramahLogo from "../assets/RAMAH-TECHNOLOGIES.png";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import elroiPhoto from "../assets/elroi-photo.jpg";
 import {
   ShieldCheck,
   LogOut,
@@ -26,6 +27,8 @@ import "./Dashboard.css";
 function Dashboard() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  const [activeSection, setActiveSection] = useState("overview");
 
   const [url, setUrl] = useState("");
   const [scanning, setScanning] = useState(false);
@@ -151,35 +154,63 @@ function Dashboard() {
     <div className="dashboard-page">
       <aside className="dashboard-sidebar">
         <Link to="/" className="dashboard-brand">
-          <ShieldCheck size={30} />
-          <span>RAMAH-PHISHGUARD</span>
+          <img
+  src={ramahLogo}
+  alt="RAMAH TECHNOLOGIES"
+  className="dashboard-brand-logo"
+/>
+<span>RAMAH-PHISHGUARD</span>
         </Link>
 
         <nav className="dashboard-navigation">
-          <p className="dashboard-nav-label">MAIN MENU</p>
+  <p className="dashboard-nav-label">MAIN MENU</p>
 
-          <a href="#overview" className="dashboard-nav-item active">
-            <LayoutDashboard size={19} />
-            Dashboard
-          </a>
+  <a
+    href="#overview"
+    className={`dashboard-nav-item ${activeSection === "overview" ? "active" : ""}`}
+    onClick={() => setActiveSection("overview")}
+  >
+    <LayoutDashboard size={19} />
+    Dashboard
+  </a>
 
-          <a href="#scan" className="dashboard-nav-item">
-            <ScanSearch size={19} />
-            URL Scanner
-          </a>
+  <a
+    href="#scan"
+    className={`dashboard-nav-item ${activeSection === "scan" ? "active" : ""}`}
+    onClick={() => setActiveSection("scan")}
+  >
+    <ScanSearch size={19} />
+    URL Scanner
+  </a>
 
-          <a href="#history" className="dashboard-nav-item">
-            <History size={19} />
-            Scan History
-          </a>
+  <a
+    href="#history"
+    className={`dashboard-nav-item ${activeSection === "history" ? "active" : ""}`}
+    onClick={() => setActiveSection("history")}
+  >
+    <History size={19} />
+    Scan History
+  </a>
 
-          <p className="dashboard-nav-label">ACCOUNT</p>
+  <p className="dashboard-nav-label">ACCOUNT</p>
 
-          <a href="#profile" className="dashboard-nav-item">
-            <UserCircle size={19} />
-            My Profile
-          </a>
-        </nav>
+  <a
+    href="#profile"
+    className={`dashboard-nav-item ${activeSection === "profile" ? "active" : ""}`}
+    onClick={() => setActiveSection("profile")}
+  >
+    <UserCircle size={19} />
+    My Profile
+  </a>
+  <a
+  href="#about"
+  className={`dashboard-nav-item ${activeSection === "about" ? "active" : ""}`}
+  onClick={() => setActiveSection("about")}
+>
+  <UserCircle size={19} />
+  About Me
+</a>
+</nav>
 
         <button className="dashboard-logout" onClick={handleLogout}>
           <LogOut size={18} />
@@ -533,6 +564,185 @@ function Dashboard() {
               <h3>Security Awareness</h3>
               <p>Learn how to recognize phishing and online scams.</p>
               <span>Coming soon</span>
+            </div>
+          </div>
+        </section>
+        <section
+          className="dashboard-section profile-section"
+          id="profile"
+        >
+          <div className="dashboard-section-heading">
+            <div>
+              <h2>My Profile</h2>
+              <p>Manage and review your account information.</p>
+            </div>
+          </div>
+
+          <div className="profile-card">
+            <div className="profile-header">
+              <div className="profile-avatar">
+                {user?.name
+                  ?.split(" ")
+                  .map((part) => part[0])
+                  .join("")
+                  .slice(0, 2)
+                  .toUpperCase() || "U"}
+              </div>
+
+              <div className="profile-identity">
+                <h3>{user?.name || "Unknown User"}</h3>
+                <p>{user?.email || "No email available"}</p>
+                <span className="profile-role">
+                  {user?.role || "user"}
+                </span>
+              </div>
+            </div>
+
+            <div className="profile-divider" />
+
+            <div className="profile-details">
+              <div className="profile-detail">
+                <span>Full Name</span>
+                <strong>{user?.name || "Not available"}</strong>
+              </div>
+
+              <div className="profile-detail">
+                <span>Email Address</span>
+                <strong>{user?.email || "Not available"}</strong>
+              </div>
+
+              <div className="profile-detail">
+                <span>Account Role</span>
+                <strong>{user?.role || "user"}</strong>
+              </div>
+
+              <div className="profile-detail">
+                <span>Email Verification</span>
+                <strong className={user?.isEmailVerified ? "verified" : "unverified"}>
+                  {user?.isEmailVerified ? "Verified" : "Not verified"}
+                </strong>
+              </div>
+
+              <div className="profile-detail">
+                <span>Last Login</span>
+                <strong>
+                  {user?.lastLoginAt
+                    ? new Date(user.lastLoginAt).toLocaleString()
+                    : "Not available"}
+                </strong>
+              </div>
+            </div>
+
+            <div className="profile-security-note">
+              <LockKeyhole size={19} />
+              <div>
+                <strong>Account Security</strong>
+                <p>
+                  Your account is protected by RAMAH-PHISHGUARD
+                  authentication.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+
+                <section
+          className="dashboard-section about-section"
+          id="about"
+        >
+          <div className="dashboard-section-heading">
+            <div>
+              <h2>About Me</h2>
+              <p>My background, interests, and cybersecurity journey.</p>
+            </div>
+          </div>
+
+          <div className="about-card">
+  <div className="about-profile-header">
+    <img
+      src={elroiPhoto}
+      alt="Elroi Gebremeskel"
+      className="about-profile-photo"
+    />
+
+    <div className="about-profile-info">
+      <h3>ELROI GEBREMESKEL</h3>
+      <span>WEB SECURITY STUDENT</span>
+    </div>
+  </div>
+
+  <div className="about-card-heading">
+    <h3>Who I Am</h3>
+  </div>
+
+
+            <p>
+              I am an Information Systems student at Bahir Dar
+              University with a strong interest in cybersecurity
+              and web application security.
+            </p>
+
+            <p>
+              My journey focuses on understanding how web
+              applications work, identifying security
+              vulnerabilities, and learning how to protect
+              systems against cyber threats.
+            </p>
+
+            <p>
+              I am continuously developing my skills in Linux,
+              networking, JavaScript, reconnaissance, and
+              vulnerability assessment. My long-term goal is
+              to become a professional penetration tester and
+              bug bounty hunter.
+            </p>
+
+            <div className="about-divider" />
+
+            <h3>My Interests</h3>
+
+            <div className="about-tags">
+              <span>Web Security</span>
+              <span>Penetration Testing</span>
+              <span>Bug Bounty</span>
+              <span>OSINT & Recon</span>
+              <span>Network Security</span>
+              <span>Linux</span>
+            </div>
+          </div>
+
+          <div className="about-card project-about-card">
+            <div className="about-card-heading">
+              <h3>About RAMAH-PHISHGUARD</h3>
+              <span>CYBERSECURITY PROJECT</span>
+            </div>
+
+            <p>
+              RAMAH-PHISHGUARD is a web-based phishing detection
+              platform developed under RAMAH TECHNOLOGIES.
+            </p>
+
+            <p>
+              Its purpose is to help users identify potentially
+              malicious URLs by analyzing suspicious indicators
+              and providing a security risk assessment.
+            </p>
+
+            <h3>Key Features</h3>
+
+            <ul className="about-project-features">
+              <li>URL scanning and phishing detection</li>
+              <li>Security risk assessment and findings</li>
+              <li>Scan history for authenticated users</li>
+              <li>Privacy-conscious URL handling</li>
+              <li>User authentication and dashboard</li>
+            </ul>
+
+            <div className="about-project-footer">
+              <strong>RAMAH TECHNOLOGIES</strong>
+              <span>DETECT THREATS. PROTECT PEOPLE.</span>
             </div>
           </div>
         </section>

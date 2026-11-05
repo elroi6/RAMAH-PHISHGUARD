@@ -525,3 +525,64 @@ footer p {
     flex-direction: column;
   }
 }
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+/* LIGHT THEME */
+[data-theme="light"] .app {
+  color: #172033;
+  background: #f4f7fc;
+}
+
+[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #dce4ef;
+}
+
+[data-theme="light"] .brand h1,
+[data-theme="light"] .hero h2,
+[data-theme="light"] .feature-card h3 {
+  color: #101a30;
+}
+
+[data-theme="light"] .brand p,
+[data-theme="light"] .nav-links a,
+[data-theme="light"] .hero-description,
+[data-theme="light"] .feature-card p,
+[data-theme="light"] .about-section p,
+[data-theme="light"] footer p {
+  color: #526078;
+}
+
+[data-theme="light"] .hero-visual {
+  background: transparent;
+}
+
+[data-theme="light"] .shield-card,
+[data-theme="light"] .floating-card,
+[data-theme="light"] .feature-card,
+[data-theme="light"] .connection-card {
+  background: #ffffff;
+  border-color: #dce4ef;
+  color: #172033;
+  box-shadow: 0 12px 35px rgba(20, 40, 80, 0.07);
+}
+
+[data-theme="light"] .features {
+  background: #eaf0f8;
+}
+
+[data-theme="light"] .about-section {
+  background: #edf3fb;
+  border-color: #dce4ef;
+}
+
+[data-theme="light"] .system-status {
+  color: #16794b;
+}
+
+[data-theme="light"] footer {
+  border-color: #dce4ef;
+}

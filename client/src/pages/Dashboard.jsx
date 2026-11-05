@@ -2,6 +2,7 @@ import ramahLogo from "../assets/RAMAH-TECHNOLOGIES.png";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import elroiPhoto from "../assets/elroi-photo.jpg";
+import ThemeToggle from "../components/ThemeToggle";
 import {
   ShieldCheck,
   LogOut,
@@ -226,13 +227,17 @@ function Dashboard() {
             <p>Monitor your digital security from one place.</p>
           </div>
 
-          <div className="dashboard-user">
-            <UserCircle size={35} />
-            <div>
-              <strong>{user?.name || "User"}</strong>
-              <span>{user?.role || "user"}</span>
-            </div>
-          </div>
+          <div className="dashboard-header-actions">
+  <ThemeToggle />
+
+  <div className="dashboard-user">
+    <UserCircle size={35} />
+    <div>
+      <strong>{user?.name || "User"}</strong>
+      <span>{user?.role || "user"}</span>
+    </div>
+  </div>
+</div>
         </header>
 
         <section className="dashboard-welcome">

@@ -1,4 +1,4 @@
-
+import ThemeToggle from "./components/ThemeToggle";
 import { useEffect, useState } from "react";
 import {
   Routes,
@@ -68,9 +68,13 @@ function LandingPage() {
           <a href="#status">System Status</a>
         </nav>
 
-        <Link to="/register" className="nav-button">
-          Get Started <ArrowRight size={16} />
-        </Link>
+        <div className="navbar-actions">
+  <ThemeToggle />
+
+  <Link to="/register" className="nav-button">
+    Get Started <ArrowRight size={16} />
+  </Link>
+</div>
       </header>
 
       <main>

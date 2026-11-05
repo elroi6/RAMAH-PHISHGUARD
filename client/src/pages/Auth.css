@@ -429,3 +429,60 @@
   caret-color: #ffffff;
   transition: background-color 5000s ease-in-out 0s;
 }
+.auth-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+/* LIGHT THEME */
+[data-theme="light"] .auth-page {
+  color: #172033;
+  background: #f4f7fc;
+}
+
+[data-theme="light"] .auth-navbar {
+  border-color: #dce4ef;
+}
+
+[data-theme="light"] .auth-brand {
+  color: #101a30;
+}
+
+[data-theme="light"] .auth-home-link,
+[data-theme="light"] .auth-card-heading p,
+[data-theme="light"] .auth-field label,
+[data-theme="light"] .auth-hint,
+[data-theme="light"] .auth-switch,
+[data-theme="light"] .auth-security-note,
+[data-theme="light"] .auth-footer {
+  color: #526078;
+}
+
+[data-theme="light"] .auth-card {
+  background: #ffffff;
+  border-color: #dce4ef;
+  color: #172033;
+  box-shadow: 0 15px 45px rgba(20, 40, 80, 0.08);
+}
+
+[data-theme="light"] .auth-input-wrapper {
+  background: #f7f9fc;
+  border-color: #d5deeb;
+}
+
+[data-theme="light"] .auth-input-wrapper input {
+  color: #172033;
+}
+
+[data-theme="light"] .auth-input-wrapper input::placeholder {
+  color: #8793a7;
+}
+
+[data-theme="light"] .auth-divider::before,
+[data-theme="light"] .auth-divider::after {
+  background: #dce4ef;
+}
+
+[data-theme="light"] .auth-navbar-actions .auth-home-link {
+  color: #526078;
+}

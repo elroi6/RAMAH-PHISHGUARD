@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import ThemeToggle from "../components/ThemeToggle";
 import {
   ShieldCheck,
   Eye,
@@ -116,9 +117,13 @@ function Register() {
           </div>
         </Link>
 
-        <Link to="/" className="auth-home-link">
-          Back to home
-        </Link>
+        <div className="auth-navbar-actions">
+  <ThemeToggle />
+
+  <Link to="/" className="auth-home-link">
+    Back to home
+  </Link>
+</div>
       </header>
 
       <main className="auth-main">

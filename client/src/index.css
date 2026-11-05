@@ -34,3 +34,27 @@ a {
 button {
   cursor: pointer;
 }
+:root {
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  color: #172033;
+  background: #f4f7fc;
+}
+
+:root[data-theme="light"] body {
+  color: #172033;
+  background: #f4f7fc;
+}
+
+body,
+button,
+input,
+textarea {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
